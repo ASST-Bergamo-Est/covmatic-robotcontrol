@@ -172,6 +172,3 @@ class TestDropFunctionWaitForComplete(TestRobot):
 
         self._mock_api().check_action.assert_called_with(FAKE_ID_DROP)
         self.assertEqual(self._mock_api().check_action.call_count, 100)
-
-    def test_fail(self):
-        self.fail()
