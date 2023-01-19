@@ -2,7 +2,7 @@
 from abc import ABC
 
 from covmatic_stations.station import Station, instrument_loader
-from ..robot.robot import Robot
+from .robot.robot import Robot
 
 
 class RobotStationABC(Station, ABC):
