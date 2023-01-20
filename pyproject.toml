@@ -17,6 +17,10 @@ classifiers = [
 ]
 dynamic = ["version"]
 
+dependencies = [
+    "covmatic-stations"
+]
+
 [project-urls]
 "Homepage" = "https://github.com/ASST-Bergamo-Est/CovidSeq"
 
