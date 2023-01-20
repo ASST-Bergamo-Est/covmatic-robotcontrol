@@ -21,7 +21,7 @@ dynamic = ["version"]
 "Homepage" = "https://github.com/ASST-Bergamo-Est/CovidSeq"
 
 [tool.hatch.version]
-path = "covmatic_robotcontrol/__init__.py"
+path = "src/covmatic_robotcontrol/__init__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
