@@ -29,7 +29,7 @@ dependencies = [
   "pytest-cov",
 ]
 [tool.hatch.envs.default.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=covmatic_robotcontrol {args}"
+cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=src.covmatic_robotcontrol {args}"
 no-cov = "cov --no-cov {args}"
 
 [[tool.hatch.envs.test.matrix]]
@@ -46,5 +46,11 @@ exclude_lines = [
   "no cov",
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
+]
+
+[tool.hatch.build]
+exclude = [
+  "/.github",
+  "/.idea",
 ]
 
