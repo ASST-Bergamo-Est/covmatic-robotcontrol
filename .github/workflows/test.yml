@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.7', '3.8', '3.9', '3.10', '3.11' ]
+        python-version: [ '3.7', '3.8']
 
     steps:
       - uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
       - name: Run tests
         run: hatch run cov
 
-  build:
+  simulate:
     name: Build Python ${{ matrix.python-version }} on ${{ startsWith(matrix.os, 'macos-') && 'macOS' || startsWith(matrix.os, 'windows-') && 'Windows' || 'Linux' }}
     runs-on: ${{ matrix.os }}
     needs: test
@@ -56,5 +56,7 @@ jobs:
       - name: Install hatch
         run: |
           pip install hatch
-      - name: Build
-        run: hatch build
+      - name: Build and install package
+        run: pip install .
+      - name: Simulate
+        run: hatch run simulate:run

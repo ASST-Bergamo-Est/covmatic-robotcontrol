@@ -35,9 +35,16 @@ dependencies = [
 [tool.hatch.envs.default.scripts]
 cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=src.covmatic_robotcontrol {args}"
 no-cov = "cov --no-cov {args}"
+#simulate = "opentrons_simulate {args}"
 
 [[tool.hatch.envs.test.matrix]]
 python = ["37", "38"]
+
+[tool.hatch.envs.simulate.scripts]
+run = "opentrons_simulate {matrix:protocols} {args}"
+
+[[tool.hatch.envs.simulate.matrix]]
+protocols = ["station_robot_execution.py"]
 
 [tool.coverage.run]
 branch = true

@@ -1,8 +1,7 @@
 """ Base class that instantiate robot control """
 from abc import ABC
-
-from covmatic_stations.station import Station, instrument_loader
-from src.covmatic_robotcontrol.robot import Robot
+from covmatic_stations.station import Station, instrument_loader, labware_loader
+from .robot import Robot
 
 
 class RobotStationABC(Station, ABC):
@@ -19,5 +18,3 @@ class RobotStationABC(Station, ABC):
 
     def robot_drop_plate(self, slot, plate_name):
         self._robot.drop_plate(slot, plate_name)
-
-
