@@ -13,12 +13,14 @@ PLATE_NAME = "PLATE1"
 
 expected_pick_action = {
             "action": "pick",
+            "machine": OT_NAME,
             "position": POSITION,
             "plate_name": PLATE_NAME
         }
 
 expected_drop_action = {
             "action": "drop",
+            "machine": OT_NAME,
             "position": POSITION,
             "plate_name": PLATE_NAME
         }

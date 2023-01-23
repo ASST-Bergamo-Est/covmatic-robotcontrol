@@ -25,6 +25,7 @@ class Robot:
     def build_request(self, action: str, slot: str, plate_name: str, ):
         return {
             "action": action,
+            "machine": self._robot_name,
             "position": "{}-{}".format(self._robot_name, slot),
             "plate_name": plate_name
         }
