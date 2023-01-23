@@ -60,3 +60,27 @@ jobs:
         run: pip install .
       - name: Simulate
         run: hatch run simulate:run
+
+  upload:
+    if: ${{ startsWith( github.ref , 'refs/tags/' ) }}
+    runs-on: ubuntu-latest
+    container: python:3.7
+    needs: simulate
+    steps:
+      - uses: actions/checkout@v2
+      - name: Ensure latest pip
+        run: python -m pip install --upgrade pip
+      - name: Install hatch
+        run: |
+          pip install hatch
+      - name: Build
+        run: hatch build
+      - name: Install Twine
+        run: python -m pip install twine
+      - name: Upload
+        run: python -m twine upload --verbose dist/*
+        env:
+          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.TWINE_TOKEN }}
+          TWINE_REPOSITORY: ${{ secrets.TWINE_REPOSITORY }}
+          TWINE_NON_INTERACTIVE: 1
