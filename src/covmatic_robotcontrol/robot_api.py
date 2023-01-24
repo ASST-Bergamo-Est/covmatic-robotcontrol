@@ -40,9 +40,15 @@ class RobotManagerHTTP(RobotManagerInterface):
         return _url
 
     def check_action(self, action_id) -> dict:
-        # TO IMPLEMENT
-        pass
-
+        _url = "http://{host}/action/check/{action_id}".format(host=self._host, action_id=action_id)
+        answer = requests.get(_url)
+        if answer.status_code == 200:
+            answer_json = answer.json()
+            if "state" in answer_json:
+                return answer_json
+            raise RobotManagerHTTPException("Check unexpected answer for id {}: {}".format(action_id, answer))
+        else:
+            raise RobotManagerHTTPException("Check id {} has error: {}".format(action_id, answer))
 
 class RobotManagerSimulator(RobotManagerInterface):
     """ Simulation API """
