@@ -2,7 +2,8 @@
 
 
 ## v0.0.3
-### Fixed
+
+- Renamed project to **covmatic-robotstation**
 - [Robot API] Fixed action request
 
 ## v0.0.2
