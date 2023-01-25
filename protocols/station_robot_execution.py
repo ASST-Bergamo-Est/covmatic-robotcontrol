@@ -1,4 +1,4 @@
-from covmatic_robotcontrol.robot_station import RobotStationABC, labware_loader, instrument_loader
+from covmatic_robotstation.robot_station import RobotStationABC, labware_loader, instrument_loader
 class FakeStation(RobotStationABC):
     @labware_loader(0, "_fake_tipracks")
     def load_fake_tiprack(self):

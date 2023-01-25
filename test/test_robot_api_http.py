@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
-from src.covmatic_robotcontrol.robot_api import RobotManagerHTTP, RobotManagerHTTPException
+from src.covmatic_robotstation.robot_api import RobotManagerHTTP, RobotManagerHTTPException
 
 FAKE_ACTION_ID = "fakeactionid"
 FAKE_HOST = "HOST"
@@ -34,7 +34,7 @@ CHECK_DATA_RETURNED = {
 
 class TestAPI(unittest.TestCase):
     def setUp(self) -> None:
-        self._requests_patcher = patch('src.covmatic_robotcontrol.robot_api.requests')
+        self._requests_patcher = patch('src.covmatic_robotstation.robot_api.requests')
         self._mock_requests = self._requests_patcher.start()
         self._mock_response = MagicMock()
         self._mock_requests.get.return_value = self._mock_response

@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from src.covmatic_robotcontrol.robot import Robot, RobotException
+from src.covmatic_robotstation.robot import Robot, RobotException
 
 FAKE_ROBOT_MANAGER_HOST = "fakerobotmanagerhost"
 OT_NAME = "OT"
@@ -43,8 +43,8 @@ CHECK_RETURN_VALUE_FINISHED = {
 
 class TestRobot(unittest.TestCase):
     def setup_mocks(self):
-        self._api_patcher = patch('src.covmatic_robotcontrol.robot.RobotManagerHTTP')
-        self._sleep_patcher = patch('src.covmatic_robotcontrol.robot.time.sleep')
+        self._api_patcher = patch('src.covmatic_robotstation.robot.RobotManagerHTTP')
+        self._sleep_patcher = patch('src.covmatic_robotstation.robot.time.sleep')
         self._mock_api = self._api_patcher.start()
         self._mock_sleep = self._sleep_patcher.start()
 
