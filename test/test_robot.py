@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 from src.covmatic_robotcontrol.robot import Robot, RobotException
 
+FAKE_ROBOT_MANAGER_HOST = "fakerobotmanagerhost"
 OT_NAME = "OT"
 WRONG_NAME = "OT 1"
 
@@ -49,7 +50,7 @@ class TestRobot(unittest.TestCase):
 
     def setUp(self):
         self.setup_mocks()
-        self._r = Robot(OT_NAME)
+        self._r = Robot(OT_NAME, FAKE_ROBOT_MANAGER_HOST)
 
     def tearDown(self) -> None:
         self._api_patcher.stop()
@@ -62,7 +63,7 @@ class TestWrongName(TestRobot):
 
     def test_name_not_alphanum(self):
         with self.assertRaises(RobotException):
-            Robot(WRONG_NAME)
+            Robot(WRONG_NAME, FAKE_ROBOT_MANAGER_HOST)
 
 
 class TestPickFunction(TestRobot):

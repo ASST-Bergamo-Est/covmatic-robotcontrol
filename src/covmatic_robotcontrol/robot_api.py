@@ -52,6 +52,7 @@ class RobotManagerHTTP(RobotManagerInterface):
             raise RobotManagerHTTPException("Check unexpected answer for id {}: {}".format(action_id, answer))
         raise RobotManagerHTTPException("Check id {} has error: {}".format(action_id, answer))
 
+
 class RobotManagerSimulator(RobotManagerInterface):
     """ Simulation API """
     def __init__(self, *args, **kwargs):

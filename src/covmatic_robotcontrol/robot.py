@@ -10,8 +10,15 @@ class RobotException(Exception):
 
 
 class Robot:
+    """ Main Robot class to interface with a RobotManager instance
+        :param robot_name: name of the current pipetting robot;
+        :param robot_manager_host: hostname or ip address of the RobotManager instance;
+        :param simulate: whether to simulate action requests and check results;
+        :param check_wait_time: delay between *check_action* calls waiting for the action to be completed;
+    """
     def __init__(self,
                  robot_name: str,
+                 robot_manager_host: str,
                  simulate: bool = False,
                  check_wait_time: float = 0.5):
         if not robot_name.isalnum():
@@ -20,7 +27,7 @@ class Robot:
         self._logger = logging.getLogger(__name__)
         self._logger.info("Simulate is {}".format(simulate))
         self._check_wait_time = 0 if simulate else check_wait_time
-        self._api = RobotManagerSimulator() if simulate else RobotManagerHTTP()
+        self._api = RobotManagerSimulator() if simulate else RobotManagerHTTP(robot_manager_host)
 
     def build_request(self, action: str, slot: str, plate_name: str, ):
         return {
