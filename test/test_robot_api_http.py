@@ -57,8 +57,16 @@ class TestActionRequest(TestAPI):
     def test_request_return_value(self):
         self.assertEqual(FAKE_ACTION_ID, self._api.action_request(ACTION_PICK))
 
+    def test_request_get_404(self):
+        self._mock_response.json.side_effect = Exception("We shouldn't look for this json answer")
+        self._mock_response.status_code = 404
+
+        with self.assertRaises(RobotManagerHTTPException):
+            self._api.action_request(ACTION_PICK)
+        self._mock_requests.get.assert_called_once()
+
     def test_wrong_answer_raises(self):
-        self._mock_requests.get.side_effect = [MALFORMED_ACTION_ANSWER]
+        self._mock_response.json.return_value = MALFORMED_ACTION_ANSWER
         with self.assertRaises(RobotManagerHTTPException):
             self._api.action_request(ACTION_PICK)
 

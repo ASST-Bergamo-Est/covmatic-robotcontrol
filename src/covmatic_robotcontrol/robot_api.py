@@ -30,9 +30,12 @@ class RobotManagerHTTP(RobotManagerInterface):
         self._logger.info("Requesting action {}".format(action_dict))
         answer = requests.get(self._get_url_from_action(action_dict))
         self._logger.info("Received answer: {}".format(answer))
-        if "action_id" in answer:
-            return answer["action_id"]
-        raise RobotManagerHTTPException("Unexpected answer to action request: {}".format(answer))
+        if answer.status_code == 200:
+            answer_json = answer.json()
+            if "action_id" in answer_json:
+                return answer_json["action_id"]
+            raise RobotManagerHTTPException("Unexpected answer to action request: {}".format(answer))
+        raise RobotManagerHTTPException("Action request {} http code not good: {}".format(action_dict, answer))
 
     def _get_url_from_action(self, action_dict):
         _url = "http://{host}/action/{action}/{machine}/{position}/{plate_name}".format(host=self._host, **action_dict)
@@ -47,8 +50,7 @@ class RobotManagerHTTP(RobotManagerInterface):
             if "state" in answer_json:
                 return answer_json
             raise RobotManagerHTTPException("Check unexpected answer for id {}: {}".format(action_id, answer))
-        else:
-            raise RobotManagerHTTPException("Check id {} has error: {}".format(action_id, answer))
+        raise RobotManagerHTTPException("Check id {} has error: {}".format(action_id, answer))
 
 class RobotManagerSimulator(RobotManagerInterface):
     """ Simulation API """
