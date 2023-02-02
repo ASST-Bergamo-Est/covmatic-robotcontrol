@@ -1,5 +1,9 @@
 # Covmatic RobotControl
 
+## v0.0.x
+
+- Advanced *covmatic-stations* requirements to v2.19.7
+
 ## v0.0.4
 
 - Added home command from *covmatic-stations* v2.19.6
