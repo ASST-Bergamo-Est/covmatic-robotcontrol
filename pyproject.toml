@@ -18,7 +18,7 @@ classifiers = [
 dynamic = ["version"]
 
 dependencies = [
-    "covmatic-stations"
+    "covmatic-stations >= 2.19.6"
 ]
 
 [project-urls]

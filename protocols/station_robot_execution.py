@@ -11,6 +11,10 @@ class FakeStation(RobotStationABC):
     def _tipracks(self) -> dict:
         return {"_fake_tipracks": "_fake_pipette"}
 
+    def body(self):
+        self.robot_pick_plate("SLOT1", "TESTPLATE")
+        self.robot_drop_plate("SLOT2", "TESTPLATE")
+
 
 metadata = {'apiLevel': '2.7'}
 station = FakeStation(ot_name="OTTEST", num_samples=96)

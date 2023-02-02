@@ -17,7 +17,9 @@ class RobotStationABC(Station, ABC):
         self._robot = Robot(self._ot_name, self._robot_manager_host, simulate=self._ctx.is_simulating())
 
     def robot_pick_plate(self, slot, plate_name):
+        self.home()
         self._robot.pick_plate(slot, plate_name)
 
     def robot_drop_plate(self, slot, plate_name):
+        self.home()
         self._robot.drop_plate(slot, plate_name)
