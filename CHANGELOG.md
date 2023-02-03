@@ -1,6 +1,6 @@
 # Covmatic RobotControl
 
-## v0.0.x
+## v0.0.5
 
 - Advanced *covmatic-stations* requirements to v2.19.7
 
