@@ -1,5 +1,9 @@
 # Covmatic RobotControl
 
+## v0.0.6
+
+- [RobotStation] Added *RobotManager* server **port** parameter.
+
 ## v0.0.5
 
 - Advanced *covmatic-stations* requirements to v2.19.7
