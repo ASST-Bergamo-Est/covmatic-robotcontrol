@@ -10,21 +10,20 @@ OT_NAME = "OT"
 WRONG_NAME = "OT 1"
 
 SLOT_NAME = "SLOT1"
-POSITION = "{}-{}".format(OT_NAME, SLOT_NAME)
 
 PLATE_NAME = "PLATE1"
 
 expected_pick_action = {
             "action": "pick",
             "machine": OT_NAME,
-            "position": POSITION,
+            "position": SLOT_NAME,
             "plate_name": PLATE_NAME
         }
 
 expected_drop_action = {
             "action": "drop",
             "machine": OT_NAME,
-            "position": POSITION,
+            "position": SLOT_NAME,
             "plate_name": PLATE_NAME
         }
 

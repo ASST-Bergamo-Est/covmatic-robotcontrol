@@ -34,7 +34,7 @@ class Robot:
         return {
             "action": action,
             "machine": self._robot_name,
-            "position": "{}-{}".format(self._robot_name, slot),
+            "position": slot,
             "plate_name": plate_name
         }
 
