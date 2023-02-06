@@ -38,6 +38,7 @@ class TestAPI(unittest.TestCase):
         self._requests_patcher = patch('src.covmatic_robotstation.robot_api.requests')
         self._mock_requests = self._requests_patcher.start()
         self._mock_response = MagicMock()
+        self._mock_requests.post.return_value = self._mock_response
         self._mock_requests.get.return_value = self._mock_response
         self._api = RobotManagerHTTP(FAKE_HOST, FAKE_PORT)
 
@@ -53,7 +54,7 @@ class TestActionRequest(TestAPI):
 
     def test_request_calls_get(self):
         self._api.action_request(ACTION_PICK)
-        self._mock_requests.get.assert_called_once()
+        self._mock_requests.post.assert_called_once()
 
     def test_request_return_value(self):
         self.assertEqual(FAKE_ACTION_ID, self._api.action_request(ACTION_PICK))
@@ -64,7 +65,7 @@ class TestActionRequest(TestAPI):
 
         with self.assertRaises(RobotManagerHTTPException):
             self._api.action_request(ACTION_PICK)
-        self._mock_requests.get.assert_called_once()
+        self._mock_requests.post.assert_called_once()
 
     def test_wrong_answer_raises(self):
         self._mock_response.json.return_value = MALFORMED_ACTION_ANSWER
@@ -73,7 +74,13 @@ class TestActionRequest(TestAPI):
 
     def test_request_url(self):
         self._api.action_request(ACTION_PICK)
-        self._mock_requests.get.assert_called_once_with(ACTION_EXPECTED_URL)
+        self._mock_requests.post.assert_called_once()
+        self.assertEqual((ACTION_EXPECTED_URL, ), self._mock_requests.post.call_args.args)
+
+    def test_request_json_data(self):
+        self._api.action_request(ACTION_PICK)
+        self._mock_requests.post.assert_called_once()
+        self.assertTrue('json' in self._mock_requests.post.call_args.kwargs)
 
 
 class TestCheckOk(TestAPI):

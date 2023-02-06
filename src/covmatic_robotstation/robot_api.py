@@ -29,7 +29,8 @@ class RobotManagerHTTP(RobotManagerInterface):
 
     def action_request(self, action_dict) -> str:
         self._logger.info("Requesting action {}".format(action_dict))
-        answer = requests.get(self._get_url_from_action(action_dict))
+        answer = requests.post(self._get_url_from_action(action_dict),
+                               json={})
         self._logger.info("Received answer: {}".format(answer))
         if answer.status_code == 200:
             answer_json = answer.json()
