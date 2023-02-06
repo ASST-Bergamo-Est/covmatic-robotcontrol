@@ -34,11 +34,11 @@ PENDING_STATUS = "pending"
 FINISHED_STATUS = "finished"
 
 CHECK_RETURN_VALUE_PENDING = {
-    "status": PENDING_STATUS
+    "state": PENDING_STATUS
 }
 
 CHECK_RETURN_VALUE_FINISHED = {
-    "status": FINISHED_STATUS
+    "state": FINISHED_STATUS
 }
 
 

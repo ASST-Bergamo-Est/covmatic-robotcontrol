@@ -80,5 +80,5 @@ class RobotManagerSimulator(RobotManagerInterface):
             status = "finished"
 
         self._logger.info("Returning status {}".format(status))
-        return {"status": status}
+        return {"state": status}
 

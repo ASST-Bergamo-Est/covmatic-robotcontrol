@@ -53,7 +53,7 @@ class Robot:
         while True:
             res = self._api.check_action(action_id)
             self._logger.info("Received {}".format(res))
-            if res["status"] != "pending":
+            if res["state"] != "pending":
                 break
             else:
                 if self._check_wait_time:
