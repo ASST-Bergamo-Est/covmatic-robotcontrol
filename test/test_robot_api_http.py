@@ -5,6 +5,7 @@ from src.covmatic_robotstation.robot_api import RobotManagerHTTP, RobotManagerHT
 
 FAKE_ACTION_ID = "fakeactionid"
 FAKE_HOST = "HOST"
+FAKE_PORT = 1234
 
 ACTION_PICK = {
             "action": "pick",
@@ -12,7 +13,7 @@ ACTION_PICK = {
             "position": "SLOT1",
             "plate_name": "REAGENT"
         }
-ACTION_EXPECTED_URL = "http://HOST/action/pick/OT1/SLOT1/REAGENT"
+ACTION_EXPECTED_URL = "http://{host}:{port}/action/pick/OT1/SLOT1/REAGENT".format(host=FAKE_HOST, port=FAKE_PORT)
 ACTION_ANSWER = {
     "action_id": FAKE_ACTION_ID
 }
@@ -20,7 +21,7 @@ MALFORMED_ACTION_ANSWER = {
     "wrong": "field"
 }
 
-CHECK_EXPECTED_URL = "http://HOST/action/check/{}".format(FAKE_ACTION_ID)
+CHECK_EXPECTED_URL = "http://{host}:{port}/action/check/{id}".format(host=FAKE_HOST, port=FAKE_PORT, id=FAKE_ACTION_ID)
 CHECK_EXPECTED_ANSWER = {
     "state": "finished"
 }
@@ -38,7 +39,7 @@ class TestAPI(unittest.TestCase):
         self._mock_requests = self._requests_patcher.start()
         self._mock_response = MagicMock()
         self._mock_requests.get.return_value = self._mock_response
-        self._api = RobotManagerHTTP(FAKE_HOST)
+        self._api = RobotManagerHTTP(FAKE_HOST, FAKE_PORT)
 
     def tearDown(self) -> None:
         self._requests_patcher.stop()

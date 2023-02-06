@@ -19,6 +19,7 @@ class Robot:
     def __init__(self,
                  robot_name: str,
                  robot_manager_host: str,
+                 robot_manager_port: int,
                  simulate: bool = False,
                  check_wait_time: float = 0.5):
         if not robot_name.isalnum():
@@ -27,7 +28,7 @@ class Robot:
         self._logger = logging.getLogger(__name__)
         self._logger.info("Simulate is {}".format(simulate))
         self._check_wait_time = 0 if simulate else check_wait_time
-        self._api = RobotManagerSimulator() if simulate else RobotManagerHTTP(robot_manager_host)
+        self._api = RobotManagerSimulator() if simulate else RobotManagerHTTP(robot_manager_host, robot_manager_port)
 
     def build_request(self, action: str, slot: str, plate_name: str, ):
         return {

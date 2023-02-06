@@ -21,8 +21,9 @@ class RobotManagerHTTPException(Exception):
 
 
 class RobotManagerHTTP(RobotManagerInterface):
-    def __init__(self, host: str, logger=None):
+    def __init__(self, host: str, port: int, logger=None):
         self._host = host
+        self._port = port
         self._logger = logger or logging.getLogger(self.__class__.__name__)
         self._logger.info("Starting with host {}".format(self._host))
 
@@ -38,12 +39,12 @@ class RobotManagerHTTP(RobotManagerInterface):
         raise RobotManagerHTTPException("Action request {} http code not good: {}".format(action_dict, answer))
 
     def _get_url_from_action(self, action_dict):
-        _url = "http://{host}/action/{action}/{machine}/{position}/{plate_name}".format(host=self._host, **action_dict)
+        _url = "{baseurl}/action/{action}/{machine}/{position}/{plate_name}".format(baseurl=self._baseurl, **action_dict)
         self._logger.info("Returning url {} for action {}".format(_url, action_dict))
         return _url
 
     def check_action(self, action_id) -> dict:
-        _url = "http://{host}/action/check/{action_id}".format(host=self._host, action_id=action_id)
+        _url = "{baseurl}/action/check/{action_id}".format(baseurl=self._baseurl, action_id=action_id)
         answer = requests.get(_url)
         if answer.status_code == 200:
             answer_json = answer.json()
@@ -52,6 +53,9 @@ class RobotManagerHTTP(RobotManagerInterface):
             raise RobotManagerHTTPException("Check unexpected answer for id {}: {}".format(action_id, answer))
         raise RobotManagerHTTPException("Check id {} has error: {}".format(action_id, answer))
 
+    @property
+    def _baseurl(self) -> str:
+        return "http://{host}:{port}".format(host=self._host, port=self._port)
 
 class RobotManagerSimulator(RobotManagerInterface):
     """ Simulation API """
