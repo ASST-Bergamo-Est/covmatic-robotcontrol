@@ -75,12 +75,14 @@ class TestActionRequest(TestAPI):
     def test_request_url(self):
         self._api.action_request(ACTION_PICK)
         self._mock_requests.post.assert_called_once()
-        self.assertEqual((ACTION_EXPECTED_URL, ), self._mock_requests.post.call_args.args)
+        args = self._mock_requests.post.call_args[0]
+        self.assertEqual((ACTION_EXPECTED_URL, ), args)
 
     def test_request_json_data(self):
         self._api.action_request(ACTION_PICK)
         self._mock_requests.post.assert_called_once()
-        self.assertTrue('json' in self._mock_requests.post.call_args.kwargs)
+        kwargs = self._mock_requests.post.call_args[1]
+        self.assertTrue('json' in kwargs)
 
 
 class TestCheckOk(TestAPI):
