@@ -1,5 +1,11 @@
 # Covmatic RobotControl
 
+## v0.0.7
+
+- [API] Fixed *POST* request for actions.
+- Fixed bug in robot position build
+- Fixed tests for Python 3.7
+
 ## v0.0.6
 
 - [RobotStation] Added *RobotManager* server **port** parameter.
