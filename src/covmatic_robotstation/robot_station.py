@@ -24,8 +24,18 @@ class RobotStationABC(Station, ABC):
 
     def robot_pick_plate(self, slot, plate_name):
         self.home()
-        self._robot.pick_plate(slot, plate_name)
+        try:
+            self._robot.pick_plate(slot, plate_name)
+        except Exception as e:
+            self.logger.error("Error requesting pick plate {} from slot {}: {}".format(plate_name, slot, e))
+            self.pause("Error in plate transfer. Please transfer manually plate {} from slot {}".format(plate_name, slot),
+                       home=False)
 
     def robot_drop_plate(self, slot, plate_name):
         self.home()
-        self._robot.drop_plate(slot, plate_name)
+        try:
+            self._robot.drop_plate(slot, plate_name)
+        except Exception as e:
+            self.logger.error("Error requesting drop plate {} to slot {}: {}".format(plate_name, slot, e))
+            self.pause("Error in plate transfer. Please transfer manually plate {} to slot {}".format(plate_name, slot),
+                       home=False)
