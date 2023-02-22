@@ -32,6 +32,8 @@ CHECK_DATA_RETURNED = {
     "state": "finished"
 }
 
+DEFAULT_TIMEOUT = 5.0
+
 
 class TestAPI(unittest.TestCase):
     def setUp(self) -> None:
@@ -97,7 +99,7 @@ class TestCheckOk(TestAPI):
 
     def test_called_url(self):
         self._api.check_action(FAKE_ACTION_ID)
-        self._mock_requests.get.assert_called_once_with(CHECK_EXPECTED_URL)
+        self._mock_requests.get.assert_called_once_with(CHECK_EXPECTED_URL, timeout=DEFAULT_TIMEOUT)
 
     def test_return_value(self):
         # self._mock_requests.get.side_effect = [CHECK_EXPECTED_ANSWER]

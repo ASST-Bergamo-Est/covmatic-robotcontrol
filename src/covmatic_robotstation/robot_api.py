@@ -21,16 +21,17 @@ class RobotManagerHTTPException(Exception):
 
 
 class RobotManagerHTTP(RobotManagerInterface):
-    def __init__(self, host: str, port: int, logger=None):
+    def __init__(self, host: str, port: int, logger=None, timeout=5.0):
         self._host = host
         self._port = port
         self._logger = logger or logging.getLogger(self.__class__.__name__)
         self._logger.info("Starting with host {}".format(self._host))
+        self._timeout = timeout
 
     def action_request(self, action_dict) -> str:
         self._logger.info("Requesting action {}".format(action_dict))
         answer = requests.post(self._get_url_from_action(action_dict),
-                               json={})
+                               json={}, timeout=self._timeout)
         self._logger.info("Received answer: {}".format(answer))
         if answer.status_code == 200:
             answer_json = answer.json()
@@ -46,7 +47,7 @@ class RobotManagerHTTP(RobotManagerInterface):
 
     def check_action(self, action_id) -> dict:
         _url = "{baseurl}/action/check/{action_id}".format(baseurl=self._baseurl, action_id=action_id)
-        answer = requests.get(_url)
+        answer = requests.get(_url, timeout=self._timeout)
         if answer.status_code == 200:
             answer_json = answer.json()
             if "state" in answer_json:
