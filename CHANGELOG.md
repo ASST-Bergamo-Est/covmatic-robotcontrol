@@ -1,5 +1,10 @@
 # Covmatic RobotControl
 
+## v0.0.8
+- [RobotStation] Added start_at logic to skip plate transfers if previous stages not run
+- [RobotStation] Added user message for manual transfer if problem requesting robot transfer
+- [API] Added timeout to HTTP requests
+
 ## v0.0.7
 
 - [API] Fixed *POST* request for actions.
