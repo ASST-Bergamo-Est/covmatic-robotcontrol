@@ -23,19 +23,25 @@ class RobotStationABC(Station, ABC):
                             simulate=self._ctx.is_simulating())
 
     def robot_pick_plate(self, slot, plate_name):
-        self.home()
-        try:
-            self._robot.pick_plate(slot, plate_name)
-        except Exception as e:
-            self.logger.error("Error requesting pick plate {} from slot {}: {}".format(plate_name, slot, e))
-            self.pause("Error in plate transfer. Please transfer manually plate {} from slot {}".format(plate_name, slot),
-                       home=False)
+        if self._run_stage:
+            self.home()
+            try:
+                self._robot.pick_plate(slot, plate_name)
+            except Exception as e:
+                self.logger.error("Error requesting pick plate {} from slot {}: {}".format(plate_name, slot, e))
+                self.pause("Error in plate transfer. Please transfer manually plate {} from slot {}".format(plate_name, slot),
+                           home=False)
+        else:
+            self.logger.info("Skipping pick plate {} from slot {} because previous stage not run.")
 
     def robot_drop_plate(self, slot, plate_name):
-        self.home()
-        try:
-            self._robot.drop_plate(slot, plate_name)
-        except Exception as e:
-            self.logger.error("Error requesting drop plate {} to slot {}: {}".format(plate_name, slot, e))
-            self.pause("Error in plate transfer. Please transfer manually plate {} to slot {}".format(plate_name, slot),
-                       home=False)
+        if self._run_stage:
+            self.home()
+            try:
+                self._robot.drop_plate(slot, plate_name)
+            except Exception as e:
+                self.logger.error("Error requesting drop plate {} to slot {}: {}".format(plate_name, slot, e))
+                self.pause("Error in plate transfer. Please transfer manually plate {} to slot {}".format(plate_name, slot),
+                           home=False)
+        else:
+            self.logger.info("Skipping pick plate {} from slot {} because previous stage not run.")
