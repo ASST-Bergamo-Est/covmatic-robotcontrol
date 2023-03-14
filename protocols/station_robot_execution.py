@@ -15,6 +15,7 @@ class FakeStation(RobotStationABC):
     def body(self):
         self.robot_pick_plate("SLOT1", "TESTPLATE")
         self.robot_drop_plate("SLOT2", "TESTPLATE")
+        self.robot_trash_plate("SLOT1", "TRASHSLOT2", "TRASHPLATE")
 
 
 metadata = {'apiLevel': '2.7'}
