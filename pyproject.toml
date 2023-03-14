@@ -43,7 +43,10 @@ python = ["37", "38"]
 run = "opentrons_simulate {matrix:protocols} {args}"
 
 [[tool.hatch.envs.simulate.matrix]]
-protocols = ["protocols/station_robot_execution.py"]
+protocols = [
+    "protocols/station_robot_execution.py",
+    "protocols/station_robot_start_at.py"
+]
 
 [tool.coverage.run]
 branch = true

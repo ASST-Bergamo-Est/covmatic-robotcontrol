@@ -39,7 +39,7 @@ class RobotStationABC(Station, ABC):
                 self.pause("Error in plate transfer. Please transfer manually plate {} from slot {}".format(plate_name, slot),
                            home=False)
         else:
-            self.logger.info("Skipping pick plate {} from slot {} because previous stage not run.").format(plate_name, slot)
+            self.logger.info("Skipping pick plate {} from slot {} because previous stage not run.".format(plate_name, slot))
 
     def robot_drop_plate(self, slot, plate_name):
         if self._run_stage:
