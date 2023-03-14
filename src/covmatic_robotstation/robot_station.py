@@ -51,7 +51,7 @@ class RobotStationABC(Station, ABC):
                 self.pause("Error in plate transfer. Please transfer manually plate {} to slot {}".format(plate_name, slot),
                            home=False)
         else:
-            self.logger.info("Skipping pick plate {} from slot {} because previous stage not run.").format(plate_name, slot)
+            self.logger.info("Skipping pick plate {} from slot {} because previous stage not run.".format(plate_name, slot))
 
     def robot_trash_plate(self, pick_slot, trash_slot, plate_name="TRASH"):
         if self._run_stage:
@@ -66,5 +66,5 @@ class RobotStationABC(Station, ABC):
                 self.pause("Error in plate transfer. Please move manually plate {} on slot {} to trash".format(plate_name, pick_slot),
                            home=False)
         else:
-            self.logger.info("Skipping trash plate {} from slot {} to slot {} because previous stage not run.").format(
-                plate_name, pick_slot, trash_slot)
+            self.logger.info("Skipping trash plate {} from slot {} to slot {} because previous stage not run.".format(
+                plate_name, pick_slot, trash_slot))
