@@ -1,5 +1,9 @@
 # Covmatic RobotControl
 
+## v0.0.9
+- [RobotStation] Added trash function to pick the plate and drop in the TRASH location
+- [RobotStation] Fixed bug in logs if run_stage was false
+
 ## v0.0.8
 - [RobotStation] Added start_at logic to skip plate transfers if previous stages not run
 - [RobotStation] Added user message for manual transfer if problem requesting robot transfer
