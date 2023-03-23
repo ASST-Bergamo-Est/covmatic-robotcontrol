@@ -1,5 +1,8 @@
 # Covmatic RobotControl
 
+## v0.0.10
+- [RobotStation] Fixed typo in log messages.
+
 ## v0.0.9
 - [RobotStation] Added trash function to pick the plate and drop in the TRASH location
 - [RobotStation] Fixed bug in logs if run_stage was false
