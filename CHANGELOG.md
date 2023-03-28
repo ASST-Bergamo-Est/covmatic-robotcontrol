@@ -1,5 +1,9 @@
 # Covmatic RobotControl
 
+## v0.0.11
+- [RobotStation] Added internal plate transfer function
+- [Robot] Changed the wait logic to be able to launch pick and drop action for internal plate transfer.
+
 ## v0.0.10
 - [RobotStation] Fixed typo in log messages.
 
