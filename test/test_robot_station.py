@@ -4,6 +4,7 @@ from src.covmatic_robotstation.robot_station import RobotStationABC, Station
 from .common import logger
 
 TEST_SLOT = "SLOT1"
+TEST_SLOT2 = "SLOT2"
 TEST_PLATE = "PLATE"
 
 
@@ -64,6 +65,17 @@ class TestFunctions(TestBaseClass):
             expected_calls = [call.home(), call.robot.drop_plate(TEST_SLOT, TEST_PLATE)]
 
             self.assertEqual(expected_calls, mock_manager.mock_calls)
+
+    @patch.object(Station, "home")
+    def test_transfer_internal_plate(self, mock_home):
+        mock_manager = MagicMock()
+        mock_manager.attach_mock(mock_home, "home")
+        mock_manager.attach_mock(self._mock_robot(), "robot")
+
+        self._s.robot_transfer_plate_internal(TEST_SLOT, TEST_SLOT2, TEST_PLATE)
+
+        expected_calls = [call.home(), call.robot.transfer_plate_internal(TEST_SLOT, TEST_SLOT2, TEST_PLATE)]
+        self.assertEqual(expected_calls, mock_manager.mock_calls)
 
     @patch.object(Station, "home")
     @patch.object(Station, "pause")

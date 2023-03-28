@@ -10,6 +10,7 @@ OT_NAME = "OT"
 WRONG_NAME = "OT 1"
 
 SLOT_NAME = "SLOT1"
+SLOT_NAME2 = "SLOT2"
 
 PLATE_NAME = "PLATE1"
 
@@ -177,3 +178,15 @@ class TestDropFunctionWaitForComplete(TestRobot):
 
         self._mock_api().check_action.assert_called_with(FAKE_ID_DROP)
         self.assertEqual(self._mock_api().check_action.call_count, 100)
+
+
+class TestTransferFunction(TestRobot):
+    def setUp(self):
+        super().setUp()
+        self._mock_api().action_request.side_effect = [FAKE_ID_PICK, FAKE_ID_DROP]
+
+    def test_request_calls_check(self):
+        self._r.transfer_plate_internal(SLOT_NAME, SLOT_NAME2, PLATE_NAME)
+        assert self._mock_api().action_request.call_count == 2
+        assert self._mock_api().check_action.call_count == 2
+        self._mock_api().check_action.assert_called_with(FAKE_ID_DROP)      # Last call
