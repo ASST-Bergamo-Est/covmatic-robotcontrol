@@ -24,7 +24,7 @@ class RobotStationABC(Station, ABC):
 
     @instrument_loader(0, "_robot_trash")
     def load_robot_trash(self):
-        self._robot_trash = Robot(robot_name="{}TRASH".format(self._ot_name),
+        self._robot_trash = Robot(robot_name="TRASH",
                             robot_manager_host=self._robot_manager_host,
                             robot_manager_port=self._robot_manager_port,
                             simulate=self._ctx.is_simulating())
@@ -59,8 +59,9 @@ class RobotStationABC(Station, ABC):
 
             self.home()
             try:
+                self._robot_trash.drop_plate(trash_slot, plate_name, wait=False)
                 self._robot.pick_plate(pick_slot, plate_name)
-                self._robot_trash.drop_plate(trash_slot, plate_name)
+
             except Exception as e:
                 self.logger.error("Error requesting trash plate {} from slot {} to slot {}: {}".format(plate_name, pick_slot, trash_slot, e))
                 self.pause("Error in plate transfer. Please move manually plate {} on slot {} to trash".format(plate_name, pick_slot),

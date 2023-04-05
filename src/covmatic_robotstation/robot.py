@@ -38,12 +38,11 @@ class Robot:
             "plate_name": plate_name
         }
 
-    def pick_plate(self, slot: str, plate_name: str):
-        self.execute_action("pick", slot, plate_name)
+    def pick_plate(self, slot: str, plate_name: str, wait: bool = True):
+        return self.execute_action("pick", slot, plate_name, wait=wait)
 
-    def drop_plate(self, slot: str, plate_name: str):
-        self.execute_action("drop", slot, plate_name)
-
+    def drop_plate(self, slot: str, plate_name: str, wait: bool = True):
+        return self.execute_action("drop", slot, plate_name, wait=wait)
 
     def transfer_plate_internal(self, from_slot, to_slot, plate_name: "INTERNAL_PLATE"):
         """ Function to transfer a plate internally to an OT.
