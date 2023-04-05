@@ -90,3 +90,82 @@ class TestFunctions(TestBaseClass):
         self._mock_robot().drop_plate.side_effect = Exception("Unwanted exception")
         self._s.robot_drop_plate(TEST_SLOT, TEST_PLATE)
         mock_pause.assert_called()
+
+    @patch.object(Station, "watchdog_stop")
+    @patch.object(Station, "watchdog_start")
+    @patch.object(Station, "home")
+    def test_pick_stop_watchdog(self, mock_home, mock_wd_start, mock_wd_stop):
+        self._s.robot_pick_plate(TEST_SLOT, TEST_PLATE)
+        mock_wd_start.assert_called()
+        mock_wd_stop.assert_called()
+
+    @patch.object(Station, "watchdog_stop")
+    @patch.object(Station, "watchdog_start")
+    @patch.object(Station, "home")
+    @patch.object(Station, "pause")
+    def test_pick_exception_watchdog_started(self, mock_pause, mock_home, mock_wd_start, mock_wd_stop):
+        self._mock_robot().pick_plate.side_effect = Exception("Unwanted exception")
+        self._s.robot_pick_plate(TEST_SLOT, TEST_PLATE)
+        mock_wd_start.assert_called()
+        mock_wd_stop.assert_called()
+
+    @patch.object(Station, "watchdog_stop")
+    @patch.object(Station, "watchdog_start")
+    @patch.object(Station, "home")
+    def test_drop_stop_watchdog(self, mock_home, mock_wd_start, mock_wd_stop):
+        self._s.robot_drop_plate(TEST_SLOT, TEST_PLATE)
+        mock_wd_start.assert_called()
+        mock_wd_stop.assert_called()
+
+    @patch.object(Station, "watchdog_stop")
+    @patch.object(Station, "watchdog_start")
+    @patch.object(Station, "home")
+    @patch.object(Station, "pause")
+    def test_drop_exception_watchdog_started(self, mock_pause, mock_home, mock_wd_start, mock_wd_stop):
+        self._mock_robot().drop_plate.side_effect = Exception("Unwanted exception")
+        self._s.robot_drop_plate(TEST_SLOT, TEST_PLATE)
+        mock_wd_start.assert_called()
+        mock_wd_stop.assert_called()
+
+    @patch.object(Station, "watchdog_stop")
+    @patch.object(Station, "watchdog_start")
+    @patch.object(Station, "home")
+    def test_transfer_internal_stop_watchdog(self, mock_home, mock_wd_start, mock_wd_stop):
+        self._s.robot_transfer_plate_internal(TEST_SLOT, TEST_SLOT)
+        mock_wd_start.assert_called()
+        mock_wd_stop.assert_called()
+
+    @patch.object(Station, "watchdog_stop")
+    @patch.object(Station, "watchdog_start")
+    @patch.object(Station, "home")
+    @patch.object(Station, "pause")
+    def test_transfer_internal_exception_watchdog_started(self, mock_pause, mock_home, mock_wd_start, mock_wd_stop):
+        self._mock_robot().transfer_plate_internal.side_effect = Exception("Unwanted exception")
+        self._s.robot_transfer_plate_internal(TEST_SLOT, TEST_SLOT, TEST_PLATE)
+        mock_wd_start.assert_called()
+        mock_wd_stop.assert_called()
+
+class TestTrashRobot(TestBaseClass):
+    def setUp(self) -> None:
+        super().setUp()
+        self._s.load_robot()
+        self._s.load_robot_trash()
+
+    @patch.object(Station, "watchdog_stop")
+    @patch.object(Station, "watchdog_start")
+    @patch.object(Station, "home")
+    def test_trash_stop_watchdog(self, mock_home, mock_wd_start, mock_wd_stop):
+        self._s.robot_trash_plate(TEST_SLOT, TEST_SLOT, TEST_PLATE)
+        mock_wd_start.assert_called()
+        mock_wd_stop.assert_called()
+
+    @patch.object(Station, "watchdog_stop")
+    @patch.object(Station, "watchdog_start")
+    @patch.object(Station, "home")
+    @patch.object(Station, "pause")
+    def test_trash_exception_watchdog_started(self, mock_pause, mock_home, mock_wd_start, mock_wd_stop):
+        self._mock_robot().drop_plate.side_effect = Exception("Unwanted exception")
+        self._s.robot_trash_plate(TEST_SLOT, TEST_SLOT, TEST_PLATE)
+        mock_wd_start.assert_called()
+        mock_wd_stop.assert_called()
+
