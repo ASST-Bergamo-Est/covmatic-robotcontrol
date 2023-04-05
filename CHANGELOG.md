@@ -1,5 +1,11 @@
 # Covmatic RobotControl
 
+## v0.0.12
+- [RobotStation] Disabled watchdog timeout waiting for plate transfer.
+- [RobotStation] Fixed broken trash behaviour since changes in *covmatic-robotmanager* v0.0.3;
+- [Robot] Actions pick and drop added option to continue without waiting for action to complete;
+- [Robot] Actions pick and drop now return retrieved action-id.
+
 ## v0.0.11
 - [RobotStation] Added internal plate transfer function
 - [Robot] Changed the wait logic to be able to launch pick and drop action for internal plate transfer.
