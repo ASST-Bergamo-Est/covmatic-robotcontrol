@@ -29,8 +29,9 @@ class RobotStationABC(Station, ABC):
                             robot_manager_port=self._robot_manager_port,
                             simulate=self._ctx.is_simulating())
 
-    def robot_pick_plate(self, slot, plate_name):
-        if self._run_stage:
+    def robot_pick_plate(self, slot, plate_name, task_name: str = ""):
+        if self.run_stage("{} trash {} {}".format(task_name, plate_name, slot)):
+            self.msg = "Waiting for pick plate {} from slot {}".format(plate_name, slot)
             self.home()
             self.watchdog_stop()
             try:
@@ -43,8 +44,9 @@ class RobotStationABC(Station, ABC):
         else:
             self.logger.info("Skipping pick plate {} from slot {} because previous stage not run.".format(plate_name, slot))
 
-    def robot_drop_plate(self, slot, plate_name):
-        if self._run_stage:
+    def robot_drop_plate(self, slot, plate_name,  task_name: str = ""):
+        if self.run_stage("{} trash {} {}".format(task_name, plate_name, slot)):
+            self.msg = "Waiting for drop plate {} to slot {}".format(plate_name, slot)
             self.home()
             self.watchdog_stop()
             try:
@@ -57,8 +59,9 @@ class RobotStationABC(Station, ABC):
         else:
             self.logger.info("Skipping drop plate {} from slot {} because previous stage not run.".format(plate_name, slot))
 
-    def robot_trash_plate(self, pick_slot, trash_slot, plate_name="TRASH"):
-        if self._run_stage:
+    def robot_trash_plate(self, pick_slot, trash_slot, plate_name="TRASH", task_name: str = ""):
+        if self.run_stage("{} trash {} {}".format(task_name, plate_name, pick_slot)):
+            self.msg = "Waiting for trash plate {} from slot {} to trash".format(plate_name, pick_slot)
             self.logger.info("Trashing requested from slot {} to trash slot {} for plate {}".format(pick_slot, trash_slot, plate_name))
 
             self.home()
@@ -76,8 +79,9 @@ class RobotStationABC(Station, ABC):
             self.logger.info("Skipping trash plate {} from slot {} to slot {} because previous stage not run.".format(
                 plate_name, pick_slot, trash_slot))
 
-    def robot_transfer_plate_internal(self, pick_slot, drop_slot, plate_name="INTERNAL"):
-        if self._run_stage:
+    def robot_transfer_plate_internal(self, pick_slot, drop_slot, plate_name="INTERNAL", task_name: str = ""):
+        if self.run_stage("{} transfer {} {}>{}".format(task_name, plate_name, pick_slot, drop_slot)):
+            self.msg = "Waiting for transfer plate {} from slot {} to slot {}".format(plate_name, pick_slot, drop_slot)
             self.logger.info("Transferring plate {} from internal slot {} to slot {}".format(plate_name, pick_slot, drop_slot))
 
             self.home()
