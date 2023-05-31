@@ -30,7 +30,7 @@ class RobotStationABC(Station, ABC):
                             simulate=self._ctx.is_simulating())
 
     def robot_pick_plate(self, slot, plate_name, task_name: str = ""):
-        if self.run_stage("{} trash {} {}".format(task_name, plate_name, slot)):
+        if self.run_stage("{} pick {} {}".format(task_name, plate_name, slot)):
             self.msg = "Waiting for pick plate {} from slot {}".format(plate_name, slot)
             self.home()
             self.watchdog_stop()
@@ -41,11 +41,12 @@ class RobotStationABC(Station, ABC):
                 self.pause("Error in plate transfer. Please transfer manually plate {} from slot {}".format(plate_name, slot),
                            home=False)
             self.watchdog_start()
+            self.msg = ""
         else:
             self.logger.info("Skipping pick plate {} from slot {} because previous stage not run.".format(plate_name, slot))
 
     def robot_drop_plate(self, slot, plate_name,  task_name: str = ""):
-        if self.run_stage("{} trash {} {}".format(task_name, plate_name, slot)):
+        if self.run_stage("{} drop {} {}".format(task_name, plate_name, slot)):
             self.msg = "Waiting for drop plate {} to slot {}".format(plate_name, slot)
             self.home()
             self.watchdog_stop()
@@ -56,6 +57,7 @@ class RobotStationABC(Station, ABC):
                 self.pause("Error in plate transfer. Please transfer manually plate {} to slot {}".format(plate_name, slot),
                            home=False)
             self.watchdog_start()
+            self.msg = ""
         else:
             self.logger.info("Skipping drop plate {} from slot {} because previous stage not run.".format(plate_name, slot))
 
@@ -75,6 +77,7 @@ class RobotStationABC(Station, ABC):
                 self.pause("Error in plate transfer. Please move manually plate {} on slot {} to trash".format(plate_name, pick_slot),
                            home=False)
             self.watchdog_start()
+            self.msg = ""
         else:
             self.logger.info("Skipping trash plate {} from slot {} to slot {} because previous stage not run.".format(
                 plate_name, pick_slot, trash_slot))
@@ -94,6 +97,7 @@ class RobotStationABC(Station, ABC):
                 self.pause("Error in plate transfer. Please transfer manually plate {} from slot {} to slot {}".format(
                     plate_name, pick_slot, drop_slot), home=False)
             self.watchdog_start()
+            self.msg = ""
         else:
             self.logger.info("Skipping transfer plate {} from slot {} to slot {} because previous stage not run.".format(
                 plate_name, pick_slot, drop_slot))
