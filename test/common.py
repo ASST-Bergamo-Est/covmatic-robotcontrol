@@ -1,4 +1,10 @@
 import logging
 
-logger = logging.getLogger("TEST")
-logger.setLevel(logging.DEBUG)
+logger_test = logging.getLogger("TEST")
+logger_test.level = logging.DEBUG
+
+logger = logging.getLogger()
+logger.level = logging.DEBUG
+
+
+

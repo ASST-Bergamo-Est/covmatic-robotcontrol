@@ -33,6 +33,7 @@ FAKE_ID_DROP = "FAKEIDDROP"
 
 PENDING_STATUS = "pending"
 FINISHED_STATUS = "finished"
+ABORTED_STATUS = "aborted"
 
 CHECK_RETURN_VALUE_PENDING = {
     "state": PENDING_STATUS
@@ -42,12 +43,17 @@ CHECK_RETURN_VALUE_FINISHED = {
     "state": FINISHED_STATUS
 }
 
+CHECK_RETURN_VALUE_ABORTED = {
+    "state": ABORTED_STATUS
+}
+
 
 class TestRobot(unittest.TestCase):
     def setup_mocks(self):
         self._api_patcher = patch('src.covmatic_robotstation.robot.RobotManagerHTTP')
         self._sleep_patcher = patch('src.covmatic_robotstation.robot.time.sleep')
         self._mock_api = self._api_patcher.start()
+        self._mock_api().check_action.side_effect = [CHECK_RETURN_VALUE_PENDING, CHECK_RETURN_VALUE_FINISHED]
         self._mock_sleep = self._sleep_patcher.start()
 
     def setUp(self):
@@ -184,9 +190,10 @@ class TestTransferFunction(TestRobot):
     def setUp(self):
         super().setUp()
         self._mock_api().action_request.side_effect = [FAKE_ID_PICK, FAKE_ID_DROP]
+        self._mock_api().check_action.side_effect = [CHECK_RETURN_VALUE_FINISHED,CHECK_RETURN_VALUE_FINISHED]
 
     def test_request_calls_check(self):
         self._r.transfer_plate_internal(SLOT_NAME, SLOT_NAME2, PLATE_NAME)
-        assert self._mock_api().action_request.call_count == 2
-        assert self._mock_api().check_action.call_count == 2
+        self.assertEqual(self._mock_api().action_request.call_count, 2)
+        self.assertEqual(self._mock_api().check_action.call_count, 2)
         self._mock_api().check_action.assert_called_with(FAKE_ID_DROP)      # Last call

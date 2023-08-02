@@ -44,7 +44,7 @@ class Robot:
     def drop_plate(self, slot: str, plate_name: str, wait: bool = True):
         return self.execute_action("drop", slot, plate_name, wait=wait)
 
-    def transfer_plate_internal(self, from_slot, to_slot, plate_name: "INTERNAL_PLATE"):
+    def transfer_plate_internal(self, from_slot, to_slot, plate_name: str = "INTERNAL_PLATE"):
         """ Function to transfer a plate internally to an OT.
             Since v0.0.4 robotmanager needs both pick and drop place before doing a transfer, so here we will wait
             for completion only after have launched both actions
@@ -65,8 +65,13 @@ class Robot:
         while True:
             res = self._api.check_action(action_id)
             self._logger.info("Received {}".format(res))
-            if res["state"] != "pending":
+            if res["state"] == "finished":
                 break
-            else:
+            elif res["state"] == "pending":
                 if self._check_wait_time:
                     time.sleep(self._check_wait_time)
+            else:
+                self._logger.error("Wait for action to finish: unexpected state {} for id {}".format(res, action_id))
+                raise RobotException("Error during plate transfer. Please check the system and transfer the plate manually")
+
+
