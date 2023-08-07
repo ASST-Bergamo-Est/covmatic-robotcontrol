@@ -1,5 +1,9 @@
 # Covmatic RobotControl
 
+## v0.0.13
+- [RobotStation] Added *start_at* stage for each robot operation
+- [Robot] Added support for aborted plate transfer - see *covmatic-robotmanager* from version 0.4
+
 ## v0.0.12
 - [RobotStation] Disabled watchdog timeout waiting for plate transfer.
 - [RobotStation] Fixed broken trash behaviour since changes in *covmatic-robotmanager* v0.0.3;
