@@ -1,4 +1,4 @@
-# Covmatic RobotControl
+# Covmatic RobotStation
 
 ## v0.0.13
 - [RobotStation] Added *start_at* stage for each robot operation
