@@ -19,6 +19,7 @@ A *[covmatic-station](https://pypi.org/project/covmatic-stations/)* extension pa
 * [Calibration](#calibration)
 * [Development](#development)
 * [Testing](#testing)
+* [Simulation](#simulation)
 * [Publish](#publish)
 
 
@@ -130,9 +131,18 @@ To execute tests and coverage report just launch:
 hatch run cov
 ```
 
+## Simulation
+
+You can execute a simulation of two test class included in *protocols* directory.
+The simulation is carried out using *opentrons_simulate* program.
+Launch the following command to simulate:
+```
+hatch run simulate:run
+```
+
 ## Publish
 
-To publish a new version of the package be sure the package is satisfying the testing step;
+To publish a new version of the package be sure the package is satisfying the testing and simulation steps;
 then use *git* to add and commit everything.
 The last step is to create a tag for version *x.y.x* with:
 ```
